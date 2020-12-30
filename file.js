@@ -87,7 +87,7 @@ function FireProjectile() {
                         zhealthbararray[ZombieArray.indexOf(gi.character)].style.width = (((gi.character.health - damagedone)/gi.character.health)*parseInt(zhealthbararray[ZombieArray.indexOf(gi.character)].style.width)).toString()+"%";
                         gi.character.health -= damagedone;
                         updategrid();
-                        if (gi.character.health <= 0) {
+                        if (gi.character.health <= 0) { //make it so shots will go through dead zombies
                             CanAbility = false;
                             CreateConsoleText("Armor chomper has vanquished "+gi.character.name+".")
                             wc.removeChild((fighterPhysArray[fighterArray.indexOf(gi.character)]));
@@ -108,7 +108,9 @@ function FireProjectile() {
                         }
                     }
                     else {
-                        CreateConsoleText("Armor Chomper has missed his attack.")
+                        if (currentProjectile.shots == 1) {
+                            CreateConsoleText("Armor Chomper has missed.");
+                        }
                     }
                 }
                 currentProjectile.TimeUntilReady = currentProjectile.reloadTime+1;
@@ -130,7 +132,7 @@ function ResetGame() {
     document.getElementById("LevelCount").innerHTML = "Level "+difficultylevel
     Browncoat.health = 50;
     Conehead.health = 125;
-    Imp.health = 40;
+    Imp.health = 25;
     Buckethead.health = 200;
     Yeti.health = 150;
     GunZomb.health = 100;
@@ -158,7 +160,7 @@ function ResetGame() {
             CPL += NZ.powerLevel;
         }
     }
-    ZombieArray = ZTS;
+    ZombieArray = ZTS; //sort zombie array by coords (lowest x goes first);
     prevzposes = [];
     zhealtharray = [];
     zhealthbararray = [];
@@ -185,13 +187,13 @@ function ResetGame() {
         zhealthbar.style.width = "15%";
         zhealthbar.style.minHeight = "4%";
         zhealthbar.style.maxHeight = "4%";
-        zhealthbar.style.zIndex = 8000;
+        zhealthbar.style.zIndex = 9001;
         zhealthbar.style.border = "2px solid #021a40";
         wc.appendChild(zhealthbar);
         zhealth.style.position = "absolute";
         zhealth.style.fontFamily =  'Marker Felt';
         zhealth.style.fontSize = "2vw";
-        zhealth.style.zIndex = 8008;
+        zhealth.style.zIndex = 9002;
         wc.appendChild(zhealth)
         zhealtharray.push(zhealth);
         zhealthbararray.push(zhealthbar);
@@ -252,15 +254,25 @@ function CheckForLoss() {
 }
 function CreateConsoleText(text) {
     ctc = document.getElementById("ConsoleTextContainer");
-    if (consolemessages.length > 3) {
-        ctc.removeChild(consolemessages[0]);
-        consolemessages.shift();
+    if (consolemessages.length>0 && /\d/.test(text) && (text.replace(/[0-9]/g, '') == consolemessages[consolemessages.length-1].innerHTML.replace(/[0-9]/g, ''))) {
+        newnum = parseInt(text.replace(/\D/g,''))
+        nindex = text.indexOf(newnum);
+        edittext = text.replace(/[0-9]/g, '')
+        edittext = edittext.slice(0, nindex)+(newnum+parseInt(consolemessages[consolemessages.length-1].innerHTML.replace(/\D/g,'')))+edittext.slice(nindex);
+        consolemessages[consolemessages.length-1].innerHTML = edittext;
+        
     }
-    Message = document.createElement("div");
-    Message.className = "consoletext";
-    Message.innerHTML = text;
-    consolemessages.push(Message);
-    ctc.appendChild(Message)
+    else {
+        if (consolemessages.length > 3) {
+            ctc.removeChild(consolemessages[0]);
+            consolemessages.shift();
+        }
+        Message = document.createElement("div");
+        Message.className = "consoletext";
+        Message.innerHTML = text;
+        consolemessages.push(Message);
+        ctc.appendChild(Message)
+    }
 }
 function UpdateTurnCount() {
     if (IsPlayerTurn) {
@@ -357,7 +369,7 @@ Bite.damage = 25;
 Bite.range = 1;
 AnkBite = new AttackType();
 AnkBite.name = "Ankle Bite";
-AnkBite.damage = 30;
+AnkBite.damage = 20;
 AnkBite.range = 1;
 Rock = new AttackType();
 Rock.name = "Rock";
@@ -375,7 +387,7 @@ Gun.name = "Bullet Fire";
 Gun.damage = 25;
 Gun.range = 5;
 Gun.shots = 2;
-Gun.accuracy = 50;
+Gun.accuracy = 55;
 IceDagger = new AttackType();
 IceDagger.name = "Ice Dagger";
 IceDagger.damage = 40;
@@ -425,8 +437,8 @@ GunZomb.attacks.push(Gun);
 GunZomb.aliveSprite = "GunZombie.PNG";
 Imp = new Fighter();
 Imp.name = "Imp";
-Imp.health = 40;
-Imp.powerLevel = 1;
+Imp.health = 25;
+Imp.powerLevel = 0.5;
 Imp.movement = 2;
 Imp.height = "15%";
 Imp.attacks.push(AnkBite)
@@ -466,13 +478,13 @@ for (z in ZombieArray) {
     zhealthbar.style.width = "15%";
     zhealthbar.style.minHeight = "4%";
     zhealthbar.style.maxHeight = "4%";
-    zhealthbar.style.zIndex = 8000;
+    zhealthbar.style.zIndex = 9001;
     zhealthbar.style.border = "2px solid #021a40";
     wc.appendChild(zhealthbar);
     zhealth.style.position = "absolute";
     zhealth.style.fontFamily =  'Marker Felt';
     zhealth.style.fontSize = "2vw";
-    zhealth.style.zIndex = 8008;
+    zhealth.style.zIndex = 9002;
     wc.appendChild(zhealth)
     zhealtharray.push(zhealth);
     zhealthbararray.push(zhealthbar);
@@ -671,7 +683,9 @@ function TestAttack(zombie, attack) {
                         }
                     }
                     else {
-                        CreateConsoleText(zombie.name+" has missed.");
+                        if (attack.shots == 1) {
+                            CreateConsoleText(zombie.name+" has missed.");
+                        }
                     }
                 }
                 attack.TimeUntilReady = attack.reloadTime+1;
@@ -689,7 +703,6 @@ function TestAttack(zombie, attack) {
         }
     }
     if (!(willhit)) {
-        console.log("clearing")
         for (i = 0; i < gridx*gridy; i++) {
             currentx += 1;
             if ((zombie.coords[0]-1 >= currentx && currentx >= zombie.coords[0]-attack.range) && currenty === zombie.coords[1]) {
@@ -732,7 +745,6 @@ function CheckZindexes() {
     }
 }
 function CalculateMoves(zombie) {
-    zombie.movesLeft -= 1;
     if (zombie.coords[0] <= AC.coords[0]) {
         MoveZombie(zombie, [1,0])
         return;
@@ -771,12 +783,14 @@ function CalculateMoves(zombie) {
     }
     CheckZindexes();
 }
-function MoveZombie(zombie, direction) { //direction is array [x,y]
+function MoveZombie(zombie, direction) { 
+    zombie.movesLeft -= 1;
     createtext = true;
     prevzposes[ZombieArray.indexOf(zombie)] = zombie.coords.slice(0);
     zombie.coords[0] += direction[0];
     zombie.coords[1] += direction[1];
     if (CheckIfCollision("Zombie",zombie)) {
+        zombie.movesLeft += 1;
         updategrid();
         return false;
     }
@@ -794,7 +808,7 @@ function MoveZombie(zombie, direction) { //direction is array [x,y]
             CreateConsoleText(zombie.name+" has moved 1 unit left.")
         }
     }
-    if (zombie.movesLeft > 1) {
+    if (zombie.movesLeft > 0) {
         CalculateMoves(zombie);
         createtext = false;
     }
@@ -812,7 +826,7 @@ function RoundToOne(num) {
 function ZombieTurn(z) {
     zombie = ZombieArray[z];
     CanZAbility[z] = true;
-    zombie.movesLeft = zombie.movement+1;
+    zombie.movesLeft = zombie.movement;
     if (zombie.stunned) {
         setTimeout(function() {
             CreateConsoleText(zombie.name+" did not do anything as they are stunned.")
