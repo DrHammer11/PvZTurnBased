@@ -430,7 +430,7 @@ Imp.powerLevel = 1;
 Imp.movement = 2;
 Imp.height = "15%";
 Imp.attacks.push(AnkBite)
-Imp.aliveSprite = "Imp.png";
+Imp.aliveSprite = "Imp.PNG";
 fighterArray.push(AC, Browncoat) //,Conehead)
 griditemarray = [];
 phygriditems = [];
