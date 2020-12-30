@@ -1,0 +1,159 @@
+#EverythingFitter {
+  position:absolute;
+  overflow:hidden;
+}
+
+#TitleContainer {
+  position:absolute; 
+  left:20%; 
+  top:15%;
+}
+
+#title {
+  font-size:3vw;
+  font-family: 'Marker Felt'
+}
+
+#TurnCounter {
+  font-size:2.4vw;
+  font-family: 'Marker Felt';
+  position:absolute;
+  left:30%; 
+  top:3%;
+}
+
+#HealthIcon {
+  pointer-events:none;
+  position:absolute;
+  left:0%; 
+  height:15%;
+  top:80%;
+  z-index: 2001;
+}
+
+#HealthAmount {
+  pointer-events:none;
+  position:absolute;
+  font-size:3.6vw;
+  font-family: 'Marker Felt';
+  left:7%; 
+  top:77%;
+  z-index: 3000;
+}
+
+.consoletext {
+  font-size:1.6vw;
+  font-family: 'Marker Felt';
+
+}
+
+#ConsoleTextContainer {
+  pointer-events:none;
+  position:absolute;
+  top: 65%;
+  left: 0%;
+  background-color: rgb(226, 226, 226);
+  z-index: 9000;
+}
+
+.Fighter {
+    pointer-events:none;
+    position:absolute; 
+    width:auto;
+    height:30%;
+    left:200px;
+    top: 25%;
+    z-index: 666;
+}
+
+.AbilityButton {
+  font-size:2vw;
+  font-family: 'Marker Felt'
+}
+
+#AbilityButtons {
+  position:absolute;
+  left: 35%;
+  top: 15%;
+  z-index: 8999;
+}
+.MessageContainer {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 999999999; /* Sit on top */
+    padding-top: 2vw; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+  }
+  
+  /* Modal Content */
+.Message {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 1.4vw;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .MessageText {
+    font-size:1.4vw;
+    font-family: 'Marker Felt'
+}
+
+.MessageHeader {
+    font-size:2.2vw;
+    font-family: 'Marker Felt'
+}
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 2.8vw;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #EndText {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    font-size:10vw;
+    font-family: 'Marker Felt';
+    z-index: 4609457;
+  }
+
+  #RetryButton {
+    position: absolute;
+    top: 55%;
+    left: 45%;
+    font-size:3vw;
+    font-family: 'Marker Felt';
+    z-index: 4609457;
+  }
+
+  #LevelCount {
+    position: absolute;
+    font-size:2.2vw;
+    font-family: 'Marker Felt';
+    left: 2%;
+    top: 0%;
+  }
+
+  .gridTile {
+    position: absolute;
+  }
+  
+  .gridTile:hover,
+  .gridTile:focus {
+    content:url("GreenTile.PNG");
+  }
