@@ -5,7 +5,7 @@
 
 #TitleContainer {
   position:absolute; 
-  left:20%; 
+  left:40%; 
   top:15%;
 }
 
@@ -50,7 +50,7 @@
 #ConsoleTextContainer {
   pointer-events:none;
   position:absolute;
-  top: 65%;
+  top: 10%;
   left: 0%;
   background-color: rgb(226, 226, 226);
   z-index: 9000;
@@ -73,9 +73,9 @@
 
 #AbilityButtons {
   position:absolute;
-  left: 35%;
+  left: 55%;
   top: 15%;
-  z-index: 8999;
+  z-index: 9003;
 }
 .MessageContainer {
     display: none; /* Hidden by default */
@@ -130,6 +130,7 @@
     font-size:10vw;
     font-family: 'Marker Felt';
     z-index: 4609457;
+    background-color: rgb(226, 226, 226);
   }
 
   #RetryButton {
@@ -151,9 +152,4 @@
 
   .gridTile {
     position: absolute;
-  }
-  
-  .gridTile:hover,
-  .gridTile:focus {
-    content:url("GreenTile.PNG");
   }
