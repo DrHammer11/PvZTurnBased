@@ -812,7 +812,7 @@ function RoundToOne(num) {
 function ZombieTurn(z) {
     zombie = ZombieArray[z];
     CanZAbility[z] = true;
-    zombie.movesLeft = zombie.movement;
+    zombie.movesLeft = zombie.movement+1;
     if (zombie.stunned) {
         setTimeout(function() {
             CreateConsoleText(zombie.name+" did not do anything as they are stunned.")
